@@ -11,23 +11,6 @@ array:
   .quad 0x0000000000000001
   .quad 0x0000000000000008
 
-  # Registers:
-#
-#  %rdi: len
-#  %rsi: arr
-#  %rax: ret
-#  %rdx: val
-#  %rbx: 1. element
-#  %rbp: 2. element #
-#  %rsp: skrald #
-#  %r8:  1
-#  %r9:  0
-#  %r10: 0
-#  %r11: %
-#  %r12: 1 (i)
-#  %r13: 8
-#  %r14: 4
-
 Start:
   irmovq $1, %r10
   irmovq $4, %r11
