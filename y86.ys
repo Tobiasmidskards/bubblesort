@@ -1,6 +1,8 @@
 # Execution starts on adress 0
   .pos 0
-  jmp Start
+  irmovq stack, %rsp
+  call main
+  halt
 
 # Array of 10 elements
   .align 8
@@ -10,6 +12,14 @@ array:
   .quad 0x0000000000000003
   .quad 0x0000000000000001
   .quad 0x0000000000000008
+  .quad 0x0000000000000009
+  
+Main:
+  irmovq array, %rsi
+  irmovq $5, %rdi
+  call Start
+  ret
+  
 
 Start:
   irmovq $1, %r10
@@ -67,3 +77,6 @@ L2:
   irmovq $0, %rbp
   ret
 
+#stack
+  .pos 0x200
+stack:
