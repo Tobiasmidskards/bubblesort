@@ -1,0 +1,86 @@
+# Execution starts on adress 0
+  .pos 0
+  jmp Start
+
+# Array of 10 elements
+  .align 8
+
+array:
+  .quad 0x0000000000000004
+  .quad 0x0000000000000003
+  .quad 0x0000000000000001
+  .quad 0x0000000000000008
+
+  # Registers:
+#
+#  %rdi: len
+#  %rsi: arr
+#  %rax: ret
+#  %rdx: val
+#  %rbx: 1. element
+#  %rbp: 2. element #
+#  %rsp: skrald #
+#  %r8:  1
+#  %r9:  0
+#  %r10: 0
+#  %r11: %
+#  %r12: 1 (i)
+#  %r13: 8
+#  %r14: 4
+
+Start:
+  irmovq $1, %r10
+  irmovq $4, %r11
+  irmovq $1, %r12
+  jmp L2
+
+L4:
+  rrmovq %rdx, %rax
+  # leaq
+  rrmovq %rax, %r8
+  addq %r8, %r8
+  addq %r8, %r8
+  addq %rdi, %r8
+  rrmovq %r8, %rbx
+  #leaq
+  addq %rax, %rax
+  addq %rax, %rax
+  addq %r11, %rax
+  addq %rdi, %rax
+  rrmovq %rax, %r9
+  pushq %rbx
+  subq %r9, %rbx
+  popq %rbx
+  jle L3
+  rmmovq %r9, (%r8)
+  rmmovq %rbx, (%rax)
+
+
+L3:
+  addq %r12, %rdx
+  jmp L5
+
+L6:
+  irmovq $0, %rdx
+
+L5:
+  #leal
+  irmovq $-1, %rsi
+  addq %rsi, %rbp
+  #cmpl
+  pushq %rbp
+  subq %rdx, %rbp
+  popq %rbp
+  jg L4
+  addq %r12, %r10
+
+
+L2:
+  #cmpl
+  pushq %rsp
+  subq %r10, %rsp
+  popq %rsp
+  jl L6
+  irmovq $0, %rbp
+  ret
+
